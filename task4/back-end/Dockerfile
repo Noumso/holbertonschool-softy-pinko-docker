@@ -1,25 +1,20 @@
-# This Dockerfile is based on the latest ubuntu version
+# Use latest ubuntu image
 FROM ubuntu:latest
-
-# Command to execute the image and the configuration
+# Update ubuntu packages, then upgrade packages with -y (yes) option
 RUN apt-get update && apt-get upgrade -y
-
-# Install Python3 and pip3
+# Install python3 and pip with -y (yes) option
 RUN apt-get install -y python3 python3-pip
-
+# Handle error message "error: externally-managed-environment"
 RUN rm /usr/lib/python*/EXTERNALLY-MANAGED
-
-# Install Flask using pip3
+# Install python Flask with pip
 RUN pip3 install flask
-
-# The working directory
+# Install flask-cors (cross-origin requests)
+RUN pip3 install flask-cors
+# Copy api.py to the flask app directory
+COPY ./api.py /app/app.py
+# Set the working directory
 WORKDIR /app
-
-# Copy the Python file into the image
-COPY ./api.py /app/api.py
-
-# Expose port 5252 for the Flask application
+# Expose port 5252
 EXPOSE 5252
-
-# Run the Flask application
-CMD ["python3", "api.py"]
+# Run the Flask app
+CMD ["python3", "app.py"]

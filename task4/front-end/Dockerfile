@@ -1,11 +1,14 @@
-# Utilisation de la dernière version de Nginx
-FROM nginx:latest
+# Utiliser une version spécifique de NGINX pour éviter les vulnérabilités
+FROM nginx:1.25.2-alpine
 
-# Création du dossier pour les fichiers front-end
-RUN mkdir -p /var/www/html/softy-pinko-front-end
+# Copier le répertoire front-end dans le conteneur
+COPY ./softy-pinko-front-end /var/www/html/softy-pinko-front-end
 
-# Copie des fichiers du front-end vers le serveur Nginx
-COPY softy-pinko-front-end /var/www/html/softy-pinko-front-end
-
-# Copie du fichier de configuration Nginx
+# Copier le fichier de configuration NGINX
 COPY softy-pinko-front-end.conf /etc/nginx/conf.d/default.conf
+
+# Exposer le port 9000
+EXPOSE 9000
+
+# Lancer NGINX avec le conteneur
+CMD ["nginx", "-g", "daemon off;"]
