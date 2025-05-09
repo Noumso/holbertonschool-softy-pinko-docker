@@ -1,5 +1,5 @@
 # Utiliser une version spécifique de NGINX pour éviter les vulnérabilités
-FROM nginx:1.25.2-alpine
+FROM nginx:stable-alpine
 
 # Copier le répertoire front-end dans le conteneur
 COPY ./softy-pinko-front-end /var/www/html/softy-pinko-front-end
