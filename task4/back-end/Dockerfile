@@ -1,20 +1,22 @@
-# Use latest ubuntu image
+# Use the latest Ubuntu image
 FROM ubuntu:latest
-# Update ubuntu packages, then upgrade packages with -y (yes) option
+
+# Update and upgrade APT
 RUN apt-get update && apt-get upgrade -y
-# Install python3 and pip with -y (yes) option
+
+# Install Python3, pip3, and Flask
 RUN apt-get install -y python3 python3-pip
-# Handle error message "error: externally-managed-environment"
 RUN rm /usr/lib/python*/EXTERNALLY-MANAGED
-# Install python Flask with pip
-RUN pip3 install flask
-# Install flask-cors (cross-origin requests)
-RUN pip3 install flask-cors
-# Copy api.py to the flask app directory
-COPY ./api.py /app/app.py
-# Set the working directory
+RUN pip3 install flask flask-cors
+
+# Set the working directory to /app
 WORKDIR /app
-# Expose port 5252
+
+# Copy the Flask application to the image
+COPY ./api.py /app/api.py
+
+# Expose port 5252 for the Flask server
 EXPOSE 5252
-# Run the Flask app
-CMD ["python3", "app.py"]
+
+# Set the default command to run the Flask application
+CMD ["python3", "api.py"]
