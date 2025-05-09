@@ -7,9 +7,9 @@ WORKDIR /app
 
 COPY ./api.py /app/api.py
     
-RUN python3 -m venv .venv
-RUN . .venv/bin/activate && pip install flask && \
-    pip install flask-cors
+RUN python3 -m venv .venv && \
+    . .venv/bin/activate && \
+    pip install flask flask-cors
 
 ENV VIRTUAL_ENV=/app/.venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"

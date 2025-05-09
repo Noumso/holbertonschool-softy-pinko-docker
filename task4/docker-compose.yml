@@ -3,18 +3,26 @@ version: '3.8'
 services:
   back-end:
     build:
-      context: .
+      context: ./back-end  # Spécifie le dossier du back-end (si tu as un dossier distinct pour ça)
       dockerfile: Dockerfile
     image: softy-pinko-back-end:task4
     ports:
       - "5252:5252"
     depends_on:
       - front-end
+    networks:
+      - softy-network
 
   front-end:
     build:
-      context: .
+      context: ./front-end  # Spécifie le dossier du front-end (si tu as un dossier distinct pour ça)
       dockerfile: Dockerfile
     image: softy-pinko-front-end:task4
     ports:
       - "80:80"
+    networks:
+      - softy-network
+
+networks:
+  softy-network:
+    driver: bridge
